@@ -54,6 +54,9 @@ package org.example.leetcode
  * ---
  */
 
+/**
+ * Solution 1 -- the long way.
+ */
 fun findEarliestAndLatestTimestamps(userLogs: Array<Array<String>>): Map<String, List<Int>> {
     val materializedLog = mutableMapOf<String, List<Int>>()
     var earliestTimestamp = 0
@@ -92,6 +95,17 @@ fun findEarliestAndLatestTimestamps(userLogs: Array<Array<String>>): Map<String,
             else listOf(earliestTimestamp, latestTimestamp)
     }
     return materializedLog
+}
+
+/**
+ * Solution 2 -- the clean and easy way.
+ */
+fun findEarliestAndLatestTimestampsV2(userLogs: List<List<String>>): Map<String, List<String>> {
+    return userLogs.groupBy({it[0]}, {it[1]})
+        .mapValues {
+            if (it.value.size == 1) listOf(it.value.first())
+            else listOf(it.value.minOrNull()!!, it.value.maxOrNull()!!)
+        }
 }
 
 /**
